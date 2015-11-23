@@ -1,0 +1,30 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['table']});
+</script>
+<script type="text/javascript">
+var visualization;
+function drawVisualization() {
+
+var query = new google.visualization.Query(
+'https://spreadsheets.google.com/a/isf.uts.edu.au/tq?key=182UzxMOkk59ssRqTSPViYScGTsPCUY2OAFsq4h9EF8U&hl=en_GB');
+
+query.setQuery('SELECT E, B, C order by E asc label E "Publisher", B "Title", C "Description"');
+query.send(handleQueryResponse);
+}
+
+function handleQueryResponse(response) {
+if (response.isError()) {
+alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+return;
+}
+
+var data = response.getDataTable();
+
+visualization = new google.visualization.Table(document.getElementById('table'));
+visualization.draw(data, {legend: 'bottom'});
+}
+google.setOnLoadCallback(drawVisualization);
+</script>
+<div id="table"></div>
+</div>
